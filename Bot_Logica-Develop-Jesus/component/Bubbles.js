@@ -76,7 +76,7 @@ function Bubbles(container, self, options) {
     var inputWrap = document.createElement("div")
     inputWrap.className = "input-wrap"
     var inputText = document.createElement("textarea")
-    inputText.setAttribute("placeholder", "Preguntame sobre sistemas expertos...")
+    inputText.setAttribute("placeholder", "Preguntame Cualquier Cosa...")
     inputWrap.appendChild(inputText)
     inputText.addEventListener("keypress", function(e) {
       // register user input
