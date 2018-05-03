@@ -1,4 +1,4 @@
-/* setup container styles */
+/* Contenedor */
 .bubble-container {
 	background: #dcdde0;
 	height: 520px;
@@ -19,7 +19,7 @@
 	-webkit-overflow-scrolling: touch;
 	-webkit-transform: translate3d(0, 0, 0);
 }
-/* optional page styles */
+
 h1 {
 	text-align: center;
 	font-weight: 300;

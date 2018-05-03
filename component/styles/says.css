@@ -1,4 +1,4 @@
-/* style bubbles */
+/* Burbujas */
 .bubble,
 .bubble-typing {
   color: #212121;
@@ -37,7 +37,6 @@
   padding: 0;
 }
 
-/* style media that's inside bubbles */
 .bubble .bubble-content img {
   width: calc(100% + 32px);
   margin: -8px -16px;
@@ -46,7 +45,7 @@
   border-radius: 5px 15px 15px 15px;
 }
 
-/* interaction recall styles */
+
 .bubble.history,
 .bubble.history .bubble-content,
 .bubble.history .bubble-content .bubble-button,

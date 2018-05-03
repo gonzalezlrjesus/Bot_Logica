@@ -1,13 +1,31 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
+    
+   <!-- 
+        Programacion logica 
+
+        Daniel Gamboa
+        Jesus Gonzalez
+        Mauricio Garcia 
+
+        El programa es un chat inteligente que recibe inputs a traves del teclado
+        donde se establecera una conversacion con un bot que es especialista en sistemas expertos
+        el usuario le hara preguntas referentes a sistemas expertos a traves de una caja de texto 
+        el programa capturara la entrada primeramente pasa por una funcion que arregla el texto para que pueda
+        ser evaluado, luego ese texto filtrado se envia a el archivo bubbles.js que se encarga de evaluar la pregunta y
+        dependiendo de la decision envia una respuesta, esa respuesta ya esta almacenada en un JSON para que pueda acceder de una forma mas facil
+
+  -->
+    
 	<meta charset="UTF-8">
 	<title>Expert system chat bot</title>
 
-	<!-- for mobile screens -->
+<!-- para pantallas móviles-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- stylesheets are conveniently separated into components -->
+	<!--Las hojas de estilo están separadas en componentes -->
 	<link rel="stylesheet" media="all" href="component/styles/setup.css">
 	<link rel="stylesheet" media="all" href="component/styles/says.css">
 	<link rel="stylesheet" media="all" href="component/styles/reply.css">
@@ -28,24 +46,18 @@
 </head>
 <body>
 
-<!-- container element for chat window -->
+<!--elemento contenedor para ventana de chat -->
 <div id="chat"></div>
 
-<!-- import the JavaScript file -->
+<!-- importar el archivo JavaScript-->
 <script src="component/Bubbles.js"></script>
 <script>
-// initialize by constructing a named function...
-// ...and add text processing plugin:
+// Inicializar
+//  Procesador de texto
 var chatWindow = new Bubbles(document.getElementById("chat"), "chatWindow", {
-  // the one that we care about is inputCallbackFn()
-  // this function returns an object with some data that we can process from user input
-  // and understand the context of it
 
-  // this is an example function that matches the text user typed to one of the answer bubbles
-  // this function does no natural language processing
-  // this is where you may want to connect this script to NLC backend.
   inputCallbackFn: function(o) {
-    // add error conversation block & recall it if no answer matched
+    // Funcion Error respuesta no encontrada
     var miss = function() {
       chatWindow.talk(
         {
@@ -101,19 +113,19 @@ var chatWindow = new Bubbles(document.getElementById("chat"), "chatWindow", {
        )
     }
 
-    // do this if answer found
+  // Si encontro la respuesta
     var match = function(key) {
       setTimeout(function() {
-        chatWindow.talk(convo, key) // restart current convo from point found in the answer
+        chatWindow.talk(convo, key) 
       }, 600)
     }
 
-    // sanitize text for search function
+    //  Funcion que Arregla el texto para que pueda ser procesado
     var strip = function(text) {
       return text.toLowerCase().replace(/[\s.,\/#!$%\^&\*;:{}=\-_'"`~()]/g, "")
     }
 
-    // search function
+    // Funcion Busqueda
     var found = false
     o.convo[o.standingAnswer].reply.forEach(function(e, i) {
       strip(e.question).includes(strip(o.input)) && o.input.length > 0
@@ -122,15 +134,8 @@ var chatWindow = new Bubbles(document.getElementById("chat"), "chatWindow", {
     })
     found ? match(found) : miss()
   }
-}) // done setting up chat-bubble
+}) 
 
-// conversation object defined separately, but just the same as in the
-// "Basic chat-bubble Example" (1-basics.html)
-
-/*
-* Daniel Gamboa
-* Hare una conversacion fluida, ando sin internet, entonces no todo sera lo final*
-*/
 var convo = {
   ice: {
     says: ["Hola", "Preguntame lo que quieras sobre sistemas expertos","Yo lo se todo sobre el tema", "Te quedas loco, no?"],
@@ -160,11 +165,8 @@ var convo = {
   "Si": {
     says: ["Cuentame, que deseas saber?"],
     reply: [
-
-    //  Inicio Posibles Respuestas
-      
+    //  Inicio Posibles Respuestas      
        //  ERES UN SISTEMA EXPERTO?
-
        {
         question: "eres un sistema experto?",
         answer: "eres un sistema experto"
@@ -173,9 +175,433 @@ var convo = {
         question: "De verdad eres un sistema experto",
         answer: "eres un sistema experto"
       },
-   
-      
+            //  Eres Consciente?
+      {
+        question: "Eres Consciente?",
+        answer: "Eres Consciente"
+      },
+      {
+        question: "Estas consciente?",
+        answer: "Eres Consciente"
+      },
+      {
+        question: "Estas vivo?",
+        answer: "Eres Consciente"
+      },   
+       // Creadores del BOT
+      {
+        question: "Quien te creo?",
+        answer: "Quien te creo"
+      },
+      {
+        question: "Quienes te crearon?",
+        answer: "Quien te creo"
+      },
+      {
+        question: "Quienes te programaron?",
+        answer: "Quien te creo"
+      },
+      {
+        question: "Quienes fueron lo que te hicieron?",
+        answer: "Quien te creo"
+      },
+        // Jesus es capo?
+      {
+        question: "Jesus es capo?",
+        answer: "Jesus"
+      },
+      {
+        question: "Quien es Jesus?",
+        answer: "Jesus"
+      },
+      // Daniel es capo?
+      {
+        question: "Daniel es capo?",
+        answer: "Daniel"
+      },
+      {
+        question: "Quien es Daniel?",
+        answer: "Daniel"
+      },
+      //  Quien es el terror de computacion
+      {
+        question: "quien es el terror de computacion?",
+        answer: "Mauricio"
+      },
+      {
+        question: "Quien es Mauricio?",
+        answer: "Mauricio"
+      },
+       //  Quien es Claudio?
+      {
+        question: "Quien es Claudio?",
+        answer: "Claudio"
+      },
+      // Personales Bot
+      {
+        question: "Como te llamas?",
+        answer: "Nombre"
+      },
+      {
+        question: "De donde eres?",
+        answer: "Donde"
+      },
+      //  concepto de sistemas expertos
+      {
+        question: "que es un sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      {
+        question: "define un sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      {
+        question: "defineme un sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      {
+        question: "defineme sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      {
+        question: "concepto de sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      // caracteristicas
+      {
+        question: "caracteristicas de un sistema experto",
+        answer: "caracteristicas de un sistema experto"
+      },
+      {
+        question: "cuales son las caracteristicas de un sistema experto",
+        answer: "caracteristicas de un sistema experto"
+      },
+      {
+        question: "que caracteriza a un sistema experto",
+        answer: "caracteristicas de un sistema experto"
+      },
+      {
+        question: "ddime las caracteristicas",
+        answer: "caracteristicas de un sistema experto"
+      },
+      // Historia de los sistemas expertos
+       {
+        question: "creadores de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "historia de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "antecedentes de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "Origen de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "algoritmos mas utilizados",
+        answer: "Historia"
+      },
+      //  Siglas de sistemas expertos
+      {
+        question: "Cuales son las siglas de sistemas expertos",
+        answer: "siglas"
+      },
+      {
+        question: "siglas de sistemas expertos",
+        answer: "siglas"
+      },
+      {
+        question: "siglas de los sistemas expertos",
+        answer: "siglas"
+      },
+       //  Ventajas
+      {
+        question: "Cuales son las ventajas",
+        answer: "ventajas"
+      },
+      {
+        question: "Cuales son las ventajas de los sistemas expertos",
+        answer: "ventajas"
+      },
+      {
+        question: "ventajas de los sistemas expertos",
+        answer: "ventajas"
+      },
+      {
+        question: "ventajas de un sistemas experto",
+        answer: "ventajas"
+      },
+       //  Desventajas
+       {
+        question: "Cuales son las desventajas",
+        answer: "desventajas"
+      },
+      {
+        question: "Cuales son las desventajas de los sistemas expertos",
+        answer: "desventajas"
+      },
+      {
+        question: "desventajas de los sistemas expertos",
+        answer: "desventajas"
+      },
+      {
+        question: "desventajas de un sistemas experto",
+        answer: "desventajas"
+      },
+       // Ramas de los sistemas expertos
+      {
+        question: "Cuales son las ramas",
+        answer: "Ramas"
+      },
+      {
+        question: "Cuales son las ramas de los sistemas expertos",
+        answer: "Ramas"
+      },
+      {
+        question: "ramas de los sistemas expertos",
+        answer: "Ramas"
+      },
+      {
+        question: "ramas de un sistemas experto",
+        answer: "Ramas"
+      },
+      // Aplicaciones de los sistemas expertos
+      {
+        question: "Cuales son las aplicaciones",
+        answer: "aplicaciones"
+      },
+      {
+        question: "Cuales son las aplicaciones de los sistemas expertos",
+        answer: "aplicaciones"
+      },
+      {
+        question: "aplicaciones de los sistemas expertos",
+        answer: "aplicaciones"
+      },
+      {
+        question: "ramas de un sistemas experto",
+        answer: "aplicaciones"
+      },
+      {
+        question: "Dime algunas aplicaciones de un sistemas experto",
+        answer: "aplicaciones"
+      },
+      // Para que sirve un sistema experto
+      {
+       question: "Para que sirve un sistema experto",
+        answer: "sirve"
+      }, 
+      //  Componentes o Arquitectura
+      {
+        question: "Cuales son los componentes?",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cuales son los componentes de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cuales son los componentes de un sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "componentes de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "componentes de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Dime algunas componentes de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cuales es la arquitectura?",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cual es la arquitectura de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cual es la arquitectura de un sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "arquitectura de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "arquitectura de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Dime algunas arquitectura de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      //  Tipos de sistemas expertos
+      {
+        question: "Cuales son los tipos?",
+        answer: "tipos"
+      },
+      {
+        question: "Cuales son los tipos de sistemas expertos",
+        answer: "tipos"
+      },
+      {
+        question: "tipos de un sistemas expertos",
+        answer: "tipos"
+      },
+      // Porque utilizar un sistema experto       
+      {
+        question: "Porque utilizar un sistema experto?",
+        answer: "utilizar"
+      },
+       // Diferencia entre Sistema experto y tradicional       
+      {
+        question: "Diferencia entre un Sistema experto y uno tradicional",
+        answer: "Diferencia"
+      },
+      {
+        question: "Diferencias entre un Sistema experto y uno tradicional",
+        answer: "Diferencia"
+      },
+        // Futuro sistema experto       
+      {
+        question: "futuro de los sistemas expertos",
+        answer: "futuro"
+      },
+      {
+        question: "Cual es el futuro de los sistemas expertos",
+        answer: "futuro"
+      },
+       // lenguajes utilizados en los sistemas expertos
+      {
+        question: "Cuales son los lenguajes utilizados en los sistemas expertos?",
+        answer: "lenguajes"
+      },
+      {
+        question: "lenguajes mas utilizados en los sistemas expertos",
+        answer: "lenguajes"
+      },
+      //  Campos de investigacion
+      {
+        question: "Cuales son los campos utilizados en los sistemas expertos?",
+        answer: "investigacion"
+      },
+      {
+        question: "campos de investigacion en los sistemas expertos",
+        answer: "investigacion"
+      },
+      {
+        question: "campos de investigacion de los sistemas expertos",
+        answer: "investigacion"
+      },
+      // Ejemplos de sistemas expertos
+      {
+        question: "Cuales son los ejemplos de un sistema experto?",
+        answer: "Ejemplos"
+      },
+      {
+        question: "Ejemplos de un sistema experto",
+        answer: "Ejemplos"
+      },
+      {
+        question: "Dime algunos ejemplos de sistemas expertos",
+        answer: "Ejemplos"
+      },
+      //  Tareas de un sistema experto
+      {
+        question: "Cuales son las tareas de un sistema experto?",
+        answer: "tareas"
+      },
+      {
+        question: "tareas de un sistema experto",
+        answer: "tareas"
+      },
+      {
+        question: "Dime algunas tareas de un sistema experto",
+        answer: "tareas"
+      },
+      // Materia Programacion Logica
+      {
+        question: "Como se llama esta materia",
+        answer: "materia"
+      },
+      {
+        question: "Que materia es esta?",
+        answer: "materia"
+      },
+      // Razones para utilizar un sistema experto
+      {
+        question: "Razones para utilizar un sistema experto",
+        answer: "Razones"
+      },
+      // Metodologia para utilizar un sistema experto
+      {
+        question: "Metodologia para hacer un sistema experto",
+        answer: "Metodologia"
+      },
+      {
+        question: "Cual Metodologia se utilizar para hacer un sistema experto",
+        answer: "Metodologia"
+      },
+      {
+        question: "Cual es la Metodologia que se utilizar para hacer un sistema experto",
+        answer: "Metodologia"
+      },
+      // Herramientas de un sistema experto
+      {
+        question: "Herramientas utilizadas en un sistema experto",
+        answer: "Herramientas"
+      },
+      {
+        question: "herramientas de un sistema experto",
+        answer: "Herramientas"
+      },
+      // Beneficios de un sistema experto
+      {
+        question: "Beneficios de utilizar en un sistema experto",
+        answer: "Beneficios"
+      },
+      {
+        question: "Beneficios de un sistema experto",
+        answer: "Beneficios"
+      },              
+      {
+          question: "Adios",                 
+          answer: "Me despido"
+      },              
+      {
+          question: "Me voy",                 
+          answer: "Me despido"
+      },              
+      {
+          question: "Chao",                 
+           answer: "Me despido"
+      }
+      //  Fin de  Posibles Respuestas  
+    ]
+  },
+  "Que es un sistema experto": {
+    says: ["En inglés somos conocido como Experts Systems", "Somos sistemas de información basados en  conocimentos en un area de aplicación...", "Un poco compleja. Nuestro fin es actuar como un consultor experto sobre un tema"],
+    reply: [
 
+    //  Inicio Posibles Respuestas      
+       //  ERES UN SISTEMA EXPERTO?
+       {
+        question: "eres un sistema experto?",
+        answer: "eres un sistema experto"
+      },
+      {
+        question: "De verdad eres un sistema experto",
+        answer: "eres un sistema experto"
+      },
       //  Eres Consciente?
       {
         question: "Eres Consciente?",
@@ -188,11 +614,8 @@ var convo = {
       {
         question: "Estas vivo?",
         answer: "Eres Consciente"
-      },
-   
-       // Creadores del BOT
-
-      
+      },   
+       // Creadores del BOT      
       {
         question: "Quien te creo?",
         answer: "Quien te creo"
@@ -258,8 +681,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "Que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -697,8 +1120,8 @@ var convo = {
       },
             //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -1141,8 +1564,434 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
+      },
+      {
+        question: "define un sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      {
+        question: "defineme un sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      {
+        question: "defineme sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      {
+        question: "concepto de sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      // caracteristicas
+      {
+        question: "caracteristicas de un sistema experto",
+        answer: "caracteristicas de un sistema experto"
+      },
+      {
+        question: "cuales son las caracteristicas de un sistema experto",
+        answer: "caracteristicas de un sistema experto"
+      },
+      {
+        question: "que caracteriza a un sistema experto",
+        answer: "caracteristicas de un sistema experto"
+      },
+      {
+        question: "ddime las caracteristicas",
+        answer: "caracteristicas de un sistema experto"
+      },
+       // Historia de los sistemas expertos
+       {
+        question: "creadores de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "historia de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "antecedentes de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "Origen de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "algoritmos mas utilizados",
+        answer: "Historia"
+      },
+      //  Siglas de sistemas expertos
+      {
+        question: "Cuales son las siglas de sistemas expertos",
+        answer: "siglas"
+      },
+      {
+        question: "siglas de sistemas expertos",
+        answer: "siglas"
+      },
+      {
+        question: "siglas de los sistemas expertos",
+        answer: "siglas"
+      },
+       //  Ventajas
+      {
+        question: "Cuales son las ventajas",
+        answer: "ventajas"
+      },
+      {
+        question: "Cuales son las ventajas de los sistemas expertos",
+        answer: "ventajas"
+      },
+      {
+        question: "ventajas de los sistemas expertos",
+        answer: "ventajas"
+      },
+      {
+        question: "ventajas de un sistemas experto",
+        answer: "ventajas"
+      },
+       //  Desventajas
+       {
+        question: "Cuales son las desventajas",
+        answer: "desventajas"
+      },
+      {
+        question: "Cuales son las desventajas de los sistemas expertos",
+        answer: "desventajas"
+      },
+      {
+        question: "desventajas de los sistemas expertos",
+        answer: "desventajas"
+      },
+      {
+        question: "desventajas de un sistemas experto",
+        answer: "desventajas"
+      },
+       // Ramas de los sistemas expertos
+      {
+        question: "Cuales son las ramas",
+        answer: "Ramas"
+      },
+      {
+        question: "Cuales son las ramas de los sistemas expertos",
+        answer: "Ramas"
+      },
+      {
+        question: "ramas de los sistemas expertos",
+        answer: "Ramas"
+      },
+      {
+        question: "ramas de un sistemas experto",
+        answer: "Ramas"
+      },
+      // Aplicaciones de los sistemas expertos
+      {
+        question: "Cuales son las aplicaciones",
+        answer: "aplicaciones"
+      },
+      {
+        question: "Cuales son las aplicaciones de los sistemas expertos",
+        answer: "aplicaciones"
+      },
+      {
+        question: "aplicaciones de los sistemas expertos",
+        answer: "aplicaciones"
+      },
+      {
+        question: "ramas de un sistemas experto",
+        answer: "aplicaciones"
+      },
+      {
+        question: "Dime algunas aplicaciones de un sistemas experto",
+        answer: "aplicaciones"
+      },
+      // Para que sirve un sistema experto
+      {
+       question: "Para que sirve un sistema experto",
+        answer: "sirve"
+      },
+      //  Componentes o Arquitectura
+      {
+        question: "Cuales son los componentes?",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cuales son los componentes de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cuales son los componentes de un sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "componentes de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "componentes de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Dime algunas componentes de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cuales es la arquitectura?",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cual es la arquitectura de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cual es la arquitectura de un sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "arquitectura de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "arquitectura de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Dime algunas arquitectura de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      //  Tipos de sistemas expertos
+      {
+        question: "Cuales son los tipos?",
+        answer: "tipos"
+      },
+      {
+        question: "Cuales son los tipos de sistemas expertos",
+        answer: "tipos"
+      },
+      {
+        question: "tipos de un sistemas expertos",
+        answer: "tipos"
+      },
+      // Porque utilizar un sistema experto
+      {
+        question: "Porque utilizar un sistema experto?",
+        answer: "utilizar"
+      },
+       // Diferencia entre Sistema experto y tradicional
+      {
+        question: "Diferencia entre un Sistema experto y uno tradicional",
+        answer: "Diferencia"
+      },
+      {
+        question: "Diferencias entre un Sistema experto y uno tradicional",
+        answer: "Diferencia"
+      },
+        // Futuro sistema experto
+      {
+        question: "futuro de los sistemas expertos",
+        answer: "futuro"
+      },
+      {
+        question: "Cual es el futuro de los sistemas expertos",
+        answer: "futuro"
+      },
+       // lenguajes utilizados en los sistemas expertos
+      {
+        question: "Cuales son los lenguajes utilizados en los sistemas expertos?",
+        answer: "lenguajes"
+      },
+      {
+        question: "lenguajes mas utilizados en los sistemas expertos",
+        answer: "lenguajes"
+      },
+       //  Campos de investigacion
+      {
+        question: "Cuales son los campos utilizados en los sistemas expertos?",
+        answer: "investigacion"
+      },
+      {
+        question: "campos de investigacion en los sistemas expertos",
+        answer: "investigacion"
+      },
+      {
+        question: "campos de investigacion de los sistemas expertos",
+        answer: "investigacion"
+      },
+      // Ejemplos de sistemas expertos
+      {
+        question: "Cuales son los ejemplos de un sistema experto?",
+        answer: "Ejemplos"
+      },
+      {
+        question: "Ejemplos de un sistema experto",
+        answer: "Ejemplos"
+      },
+      {
+        question: "Dime algunos ejemplos de sistemas expertos",
+        answer: "Ejemplos"
+      },      
+      //  Tareas de un sistema experto
+      {
+        question: "Cuales son las tareas de un sistema experto?",
+        answer: "tareas"
+      },
+      {
+        question: "tareas de un sistema experto",
+        answer: "tareas"
+      },
+      {
+        question: "Dime algunas tareas de un sistema experto",
+        answer: "tareas"
+      },
+      // Materia Programacion Logica
+      {
+        question: "Como se llama esta materia",
+        answer: "materia"
+      },
+      {
+        question: "Que materia es esta?",
+        answer: "materia"
+      },
+      // Razones para utilizar un sistema experto
+      {
+        question: "Razones para utilizar un sistema experto",
+        answer: "Razones"
+      },
+      // Metodologia para utilizar un sistema experto
+      {
+        question: "Metodologia para hacer un sistema experto",
+        answer: "Metodologia"
+      },
+      {
+        question: "Cual Metodologia se utilizar para hacer un sistema experto",
+        answer: "Metodologia"
+      },
+      {
+        question: "Cual es la Metodologia que se utilizar para hacer un sistema experto",
+        answer: "Metodologia"
+      },
+      // Herramientas de un sistema experto
+      {
+        question: "Herramientas utilizadas en un sistema experto",
+        answer: "Herramientas"
+      },
+      {
+        question: "herramientas de un sistema experto",
+        answer: "Herramientas"
+      },
+      // Beneficios de un sistema experto
+      {
+        question: "Beneficios de utilizar en un sistema experto",
+        answer: "Beneficios"
+      },
+      {
+        question: "Beneficios de un sistema experto",
+        answer: "Beneficios"
+      },
+      {
+          question: "Adios",                 
+          answer: "Me despido"
+      },              
+      {
+          question: "Me voy",                 
+          answer: "Me despido"
+      },              
+      {
+          question: "Chao",                 
+           answer: "Me despido"
+      }
+      //  Fin de  Posibles Respuestas
+    ]
+  },
+  "Claudio": {
+    says: ["El que pone 10", "soy un sistema experto con conocimientos sobre el area, dime que desea saber del area?"],
+    reply: [           
+    //  Inicio Posibles Respuestas      
+       //  ERES UN SISTEMA EXPERTO?
+       {
+        question: "eres un sistema experto?",
+        answer: "eres un sistema experto"
+      },
+      {
+        question: "De verdad eres un sistema experto",
+        answer: "eres un sistema experto"
+      },
+      //  Eres Consciente?
+      {
+        question: "Eres Consciente?",
+        answer: "Eres Consciente"
+      },
+      {
+        question: "Estas consciente?",
+        answer: "Eres Consciente"
+      },
+      {
+        question: "Estas vivo?",
+        answer: "Eres Consciente"
+      },   
+       // Creadores del BOT
+      {
+        question: "Quien te creo?",
+        answer: "Quien te creo"
+      },
+      {
+        question: "Quienes te crearon?",
+        answer: "Quien te creo"
+      },
+      {
+        question: "Quienes te programaron?",
+        answer: "Quien te creo"
+      },
+      {
+        question: "Quienes fueron lo que te hicieron?",
+        answer: "Quien te creo"
+      },
+        // Jesus es capo?
+      {
+        question: "Jesus es capo?",
+        answer: "Jesus"
+      },
+      {
+        question: "Quien es Jesus?",
+        answer: "Jesus"
+      },
+      // Daniel es capo?
+      {
+        question: "Daniel es capo?",
+        answer: "Daniel"
+      },
+      {
+        question: "Quien es Daniel?",
+        answer: "Daniel"
+      },
+      //  Quien es el terror de computacion
+      {
+        question: "quien es el terror de computacion?",
+        answer: "Mauricio"
+      },
+      {
+        question: "Quien es Mauricio?",
+        answer: "Mauricio"
+      },
+       //  Quien es Claudio?
+      {
+        question: "Quien es Claudio?",
+        answer: "Claudio"
+      },
+      // Personales Bot
+      {
+        question: "Como te llamas?",
+        answer: "Nombre"
+      },
+      {
+        question: "De donde eres?",
+        answer: "Donde"
+      },
+      //  concepto de sistemas expertos
+      {
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -1567,8 +2416,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -1993,8 +2842,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -2419,8 +3268,434 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
+      },
+      {
+        question: "define un sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      {
+        question: "defineme un sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      {
+        question: "defineme sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      {
+        question: "concepto de sistema experto",
+        answer: "Que es un sistema experto"
+      },
+      // caracteristicas
+      {
+        question: "caracteristicas de un sistema experto",
+        answer: "caracteristicas de un sistema experto"
+      },
+      {
+        question: "cuales son las caracteristicas de un sistema experto",
+        answer: "caracteristicas de un sistema experto"
+      },
+      {
+        question: "que caracteriza a un sistema experto",
+        answer: "caracteristicas de un sistema experto"
+      },
+      {
+        question: "ddime las caracteristicas",
+        answer: "caracteristicas de un sistema experto"
+      },
+       // Historia de los sistemas expertos
+       {
+        question: "creadores de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "historia de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "antecedentes de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "Origen de los sistemas expertos",
+        answer: "Historia"
+      },
+      {
+        question: "algoritmos mas utilizados",
+        answer: "Historia"
+      },
+      //  Siglas de sistemas expertos
+      {
+        question: "Cuales son las siglas de sistemas expertos",
+        answer: "siglas"
+      },
+      {
+        question: "siglas de sistemas expertos",
+        answer: "siglas"
+      },
+      {
+        question: "siglas de los sistemas expertos",
+        answer: "siglas"
+      },
+       //  Ventajas
+      {
+        question: "Cuales son las ventajas",
+        answer: "ventajas"
+      },
+      {
+        question: "Cuales son las ventajas de los sistemas expertos",
+        answer: "ventajas"
+      },
+      {
+        question: "ventajas de los sistemas expertos",
+        answer: "ventajas"
+      },
+      {
+        question: "ventajas de un sistemas experto",
+        answer: "ventajas"
+      },
+       //  Desventajas
+       {
+        question: "Cuales son las desventajas",
+        answer: "desventajas"
+      },
+      {
+        question: "Cuales son las desventajas de los sistemas expertos",
+        answer: "desventajas"
+      },
+      {
+        question: "desventajas de los sistemas expertos",
+        answer: "desventajas"
+      },
+      {
+        question: "desventajas de un sistemas experto",
+        answer: "desventajas"
+      },
+       // Ramas de los sistemas expertos
+      {
+        question: "Cuales son las ramas",
+        answer: "Ramas"
+      },
+      {
+        question: "Cuales son las ramas de los sistemas expertos",
+        answer: "Ramas"
+      },
+      {
+        question: "ramas de los sistemas expertos",
+        answer: "Ramas"
+      },
+      {
+        question: "ramas de un sistemas experto",
+        answer: "Ramas"
+      },
+      // Aplicaciones de los sistemas expertos
+      {
+        question: "Cuales son las aplicaciones",
+        answer: "aplicaciones"
+      },
+      {
+        question: "Cuales son las aplicaciones de los sistemas expertos",
+        answer: "aplicaciones"
+      },
+      {
+        question: "aplicaciones de los sistemas expertos",
+        answer: "aplicaciones"
+      },
+      {
+        question: "ramas de un sistemas experto",
+        answer: "aplicaciones"
+      },
+      {
+        question: "Dime algunas aplicaciones de un sistemas experto",
+        answer: "aplicaciones"
+      },
+      // Para que sirve un sistema experto
+      {
+       question: "Para que sirve un sistema experto",
+        answer: "sirve"
+      },
+      //  Componentes o Arquitectura
+      {
+        question: "Cuales son los componentes?",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cuales son los componentes de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cuales son los componentes de un sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "componentes de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "componentes de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Dime algunas componentes de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cuales es la arquitectura?",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cual es la arquitectura de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Cual es la arquitectura de un sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "arquitectura de los sistemas expertos",
+        answer: "Arquitectura"
+      },
+      {
+        question: "arquitectura de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      {
+        question: "Dime algunas arquitectura de un sistemas experto",
+        answer: "Arquitectura"
+      },
+      //  Tipos de sistemas expertos
+      {
+        question: "Cuales son los tipos?",
+        answer: "tipos"
+      },
+      {
+        question: "Cuales son los tipos de sistemas expertos",
+        answer: "tipos"
+      },
+      {
+        question: "tipos de un sistemas expertos",
+        answer: "tipos"
+      },
+      // Porque utilizar un sistema experto
+      {
+        question: "Porque utilizar un sistema experto?",
+        answer: "utilizar"
+      },
+       // Diferencia entre Sistema experto y tradicional
+      {
+        question: "Diferencia entre un Sistema experto y uno tradicional",
+        answer: "Diferencia"
+      },
+      {
+        question: "Diferencias entre un Sistema experto y uno tradicional",
+        answer: "Diferencia"
+      },
+        // Futuro sistema experto
+      {
+        question: "futuro de los sistemas expertos",
+        answer: "futuro"
+      },
+      {
+        question: "Cual es el futuro de los sistemas expertos",
+        answer: "futuro"
+      },
+       // lenguajes utilizados en los sistemas expertos
+      {
+        question: "Cuales son los lenguajes utilizados en los sistemas expertos?",
+        answer: "lenguajes"
+      },
+      {
+        question: "lenguajes mas utilizados en los sistemas expertos",
+        answer: "lenguajes"
+      },
+       //  Campos de investigacion
+      {
+        question: "Cuales son los campos utilizados en los sistemas expertos?",
+        answer: "investigacion"
+      },
+      {
+        question: "campos de investigacion en los sistemas expertos",
+        answer: "investigacion"
+      },
+      {
+        question: "campos de investigacion de los sistemas expertos",
+        answer: "investigacion"
+      },
+      // Ejemplos de sistemas expertos
+      {
+        question: "Cuales son los ejemplos de un sistema experto?",
+        answer: "Ejemplos"
+      },
+      {
+        question: "Ejemplos de un sistema experto",
+        answer: "Ejemplos"
+      },
+      {
+        question: "Dime algunos ejemplos de sistemas expertos",
+        answer: "Ejemplos"
+      },      
+      //  Tareas de un sistema experto
+      {
+        question: "Cuales son las tareas de un sistema experto?",
+        answer: "tareas"
+      },
+      {
+        question: "tareas de un sistema experto",
+        answer: "tareas"
+      },
+      {
+        question: "Dime algunas tareas de un sistema experto",
+        answer: "tareas"
+      },
+      // Materia Programacion Logica
+      {
+        question: "Como se llama esta materia",
+        answer: "materia"
+      },
+      {
+        question: "Que materia es esta?",
+        answer: "materia"
+      },
+      // Razones para utilizar un sistema experto
+      {
+        question: "Razones para utilizar un sistema experto",
+        answer: "Razones"
+      },
+      // Metodologia para utilizar un sistema experto
+      {
+        question: "Metodologia para hacer un sistema experto",
+        answer: "Metodologia"
+      },
+      {
+        question: "Cual Metodologia se utilizar para hacer un sistema experto",
+        answer: "Metodologia"
+      },
+      {
+        question: "Cual es la Metodologia que se utilizar para hacer un sistema experto",
+        answer: "Metodologia"
+      },
+      // Herramientas de un sistema experto
+      {
+        question: "Herramientas utilizadas en un sistema experto",
+        answer: "Herramientas"
+      },
+      {
+        question: "herramientas de un sistema experto",
+        answer: "Herramientas"
+      },
+      // Beneficios de un sistema experto
+      {
+        question: "Beneficios de utilizar en un sistema experto",
+        answer: "Beneficios"
+      },
+      {
+        question: "Beneficios de un sistema experto",
+        answer: "Beneficios"
+      },
+      {
+          question: "Adios",                 
+          answer: "Me despido"
+      },              
+      {
+          question: "Me voy",                 
+          answer: "Me despido"
+      },              
+      {
+          question: "Chao",                 
+           answer: "Me despido"
+      }
+      //  Fin de  Posibles Respuestas
+    ]
+  },
+  "Daniel": {
+    says: ["El chivo que mas mea","Que deseas saber sobre los sistemas expertos?"],
+    reply: [           
+    //  Inicio Posibles Respuestas      
+       //  ERES UN SISTEMA EXPERTO?
+       {
+        question: "eres un sistema experto?",
+        answer: "eres un sistema experto"
+      },
+      {
+        question: "De verdad eres un sistema experto",
+        answer: "eres un sistema experto"
+      },
+      //  Eres Consciente?
+      {
+        question: "Eres Consciente?",
+        answer: "Eres Consciente"
+      },
+      {
+        question: "Estas consciente?",
+        answer: "Eres Consciente"
+      },
+      {
+        question: "Estas vivo?",
+        answer: "Eres Consciente"
+      },   
+       // Creadores del BOT
+      {
+        question: "Quien te creo?",
+        answer: "Quien te creo"
+      },
+      {
+        question: "Quienes te crearon?",
+        answer: "Quien te creo"
+      },
+      {
+        question: "Quienes te programaron?",
+        answer: "Quien te creo"
+      },
+      {
+        question: "Quienes fueron lo que te hicieron?",
+        answer: "Quien te creo"
+      },
+        // Jesus es capo?
+      {
+        question: "Jesus es capo?",
+        answer: "Jesus"
+      },
+      {
+        question: "Quien es Jesus?",
+        answer: "Jesus"
+      },
+      // Daniel es capo?
+      {
+        question: "Daniel es capo?",
+        answer: "Daniel"
+      },
+      {
+        question: "Quien es Daniel?",
+        answer: "Daniel"
+      },
+      //  Quien es el terror de computacion
+      {
+        question: "quien es el terror de computacion?",
+        answer: "Mauricio"
+      },
+      {
+        question: "Quien es Mauricio?",
+        answer: "Mauricio"
+      },
+       //  Quien es Claudio?
+      {
+        question: "Quien es Claudio?",
+        answer: "Claudio"
+      },
+      // Personales Bot
+      {
+        question: "Como te llamas?",
+        answer: "Nombre"
+      },
+      {
+        question: "De donde eres?",
+        answer: "Donde"
+      },
+      //  concepto de sistemas expertos
+      {
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -2845,8 +4120,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -3271,8 +4546,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -3704,8 +4979,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -4136,8 +5411,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -4563,8 +5838,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -4990,8 +6265,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -5417,8 +6692,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -5847,8 +7122,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -6282,8 +7557,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -6710,8 +7985,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -7137,8 +8412,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -7566,8 +8841,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -7993,8 +9268,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -8420,8 +9695,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -8851,8 +10126,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -9278,8 +10553,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -9705,8 +10980,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -10133,8 +11408,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",
@@ -10559,8 +11834,8 @@ var convo = {
       },
       //  concepto de sistemas expertos
       {
-        question: "Que es un sistema experto?",
-        answer: "Que es un sistema experto?"
+        question: "que es un sistema experto",
+        answer: "que es un sistema experto"
       },
       {
         question: "define un sistema experto",

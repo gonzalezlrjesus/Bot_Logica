@@ -1,21 +1,20 @@
-// core function
+// función básica
+
 function Bubbles(container, self, options) {
   // options
   options = typeof options !== "undefined" ? options : {}
-  animationTime = options.animationTime || 200 // how long it takes to animate chat bubble, also set in CSS
-  typeSpeed = options.typeSpeed || 5 // delay per character, to simulate the machine "typing"
-  widerBy = options.widerBy || 2 // add a little extra width to bubbles to make sure they don't break
-  sidePadding = options.sidePadding || 6 // padding on both sides of chat bubbles
-  recallInteractions = options.recallInteractions || 0 // number of interactions to be remembered and brought back upon restart
-  inputCallbackFn = options.inputCallbackFn || false // should we display an input field?
+  animationTime = options.animationTime || 200 // cuánto tiempo lleva animar la burbuja de chat, también se establece en CSS
+  typeSpeed = options.typeSpeed || 5 // para simular el "tipeo" de la máquina
+  widerBy = options.widerBy || 2 // ancho de los respuestas
+  sidePadding = options.sidePadding || 6 // rellenar las respuestas
+  recallInteractions = options.recallInteractions || 0 //número de interacciones para recordar y traer de vuelta al reiniciar
+  inputCallbackFn = options.inputCallbackFn || false // campo de entrada
 
-  var standingAnswer = "ice" // remember where to restart convo if interrupted
+  var standingAnswer = "ice" // Funcion de Inicio y por si se rompe
 
-  var _convo = {} // local memory for conversation JSON object
-  //--> NOTE that this object is only assigned once, per session and does not change for this
-  // 		constructor name during open session.
-
-  // local storage for recalling conversations upon restart
+  var _convo = {} 
+  // memoria local para la conversación objeto JSON
+ 
   var localStorageCheck = function() {
     var test = "chat-bubble-storage-test"
     try {
@@ -24,7 +23,7 @@ function Bubbles(container, self, options) {
       return true
     } catch (error) {
       console.error(
-        "Your server does not allow storing data locally. Most likely it's because you've opened this page from your hard-drive. For testing you can disable your browser's security or start a localhost environment."
+        "Error"
       )
       return false
     }
@@ -36,42 +35,39 @@ function Bubbles(container, self, options) {
       JSON.parse(localStorage.getItem(interactionsLS))) ||
     []
 
-  // prepare next save point
   interactionsSave = function(say, reply) {
     if (!localStorageAvailable) return
-    // limit number of saves
+  
     if (interactionsHistory.length > recallInteractions)
-      interactionsHistory.shift() // removes the oldest (first) save to make space
-
-    // do not memorize buttons; only user input gets memorized:
+      interactionsHistory.shift() 
     if (
-      // `bubble-button` class name signals that it's a button
+      
       say.includes("bubble-button") &&
-      // if it is not of a type of textual reply
+     
       reply !== "reply reply-freeform" &&
-      // if it is not of a type of textual reply or memorized user choice
+     
       reply !== "reply reply-pick"
     )
-      // ...it shan't be memorized
+    
       return
 
-    // save to memory
+    
     interactionsHistory.push({ say: say, reply: reply })
   }
 
-  // commit save to localStorage
+ 
   interactionsSaveCommit = function() {
     if (!localStorageAvailable) return
     localStorage.setItem(interactionsLS, JSON.stringify(interactionsHistory))
   }
 
-  // set up the stage
+ 
   container.classList.add("bubble-container")
   var bubbleWrap = document.createElement("div")
   bubbleWrap.className = "bubble-wrap"
   container.appendChild(bubbleWrap)
 
-  // install user input textfield
+ //CAMPO DE ENTRADA
   this.typeInput = function(callbackFn) {
     var inputWrap = document.createElement("div")
     inputWrap.className = "input-wrap"
@@ -111,7 +107,7 @@ function Bubbles(container, self, options) {
   }
   inputCallbackFn ? this.typeInput(inputCallbackFn) : false
 
-  // init typing bubble
+  // iniciando typing
   var bubbleTyping = document.createElement("div")
   bubbleTyping.className = "bubble-typing imagine"
   for (dots = 0; dots < 3; dots++) {
@@ -121,16 +117,16 @@ function Bubbles(container, self, options) {
   }
   bubbleWrap.appendChild(bubbleTyping)
 
-  // accept JSON & create bubbles
+  // aceptando el json y pensando
   this.talk = function(convo, here) {
-    // all further .talk() calls will append the conversation with additional blocks defined in convo parameter
-    _convo = Object.assign(_convo, convo) // POLYFILL REQUIRED FOR OLDER BROWSERS
+    
+    _convo = Object.assign(_convo, convo)
 
     this.reply(_convo[here])
     here ? (standingAnswer = here) : false
   }
 
-  var iceBreaker = false // this variable holds answer to whether this is the initative bot interaction or not
+  var iceBreaker = false 
   this.reply = function(turn) {
     iceBreaker = typeof turn === "undefined"
     turn = !iceBreaker ? turn : _convo.ice
@@ -138,27 +134,6 @@ function Bubbles(container, self, options) {
     if (!turn) return
     if (turn.reply !== undefined) {
       turn.reply.reverse()
-
-// J/G Comente Esta seccion de Codigo y ya no aparecen mas las preguntas a el usuario
-// Pero no pierde funcionabilidad en cuenta a lo que esta capturando por el teclado
-// y todavia procesa la respuesta 25-04
-
-      // for (var i = 0; i < turn.reply.length; i++) {
-      //   ;(function(el, count) {
-      //     questionsHTML +=
-      //       '<span class="bubble-button" style="animation-delay: ' +
-      //       animationTime / 2 * count +
-      //       'ms" onClick="' +
-      //       self +
-      //       ".answer('" +
-      //       el.answer +
-      //       "', '" +
-      //       el.question +
-      //       "');this.classList.add('bubble-pick')\">" +
-      //       el.question +
-      //       "</span>"
-      //   })(turn.reply[i], i)
-      // }
 
 
 
@@ -170,7 +145,7 @@ function Bubbles(container, self, options) {
         : bubbleTyping.classList.add("imagine")
     })
   }
-  // navigate "answers"
+
   this.answer = function(key, content) {
     var func = function(key) {
       typeof window[key] === "function" ? window[key]() : false
@@ -179,7 +154,7 @@ function Bubbles(container, self, options) {
       ? (this.reply(_convo[key]), (standingAnswer = key))
       : func(key)
 
-    // add re-generated user picks to the history stack
+
     if (_convo[key] !== undefined && content !== undefined) {
       interactionsSave(
         '<span class="bubble-button reply-pick">' + content + "</span>",
@@ -188,7 +163,7 @@ function Bubbles(container, self, options) {
     }
   }
 
-  // api for typing bubble
+
   this.think = function() {
     bubbleTyping.classList.remove("imagine")
     this.stop = function() {
@@ -196,7 +171,7 @@ function Bubbles(container, self, options) {
     }
   }
 
-  // "type" each message within the group
+
   var orderBubbles = function(q, callback) {
     var start = function() {
       setTimeout(function() {
@@ -218,11 +193,11 @@ function Bubbles(container, self, options) {
     start()
   }
 
-  // create a bubble
+  // Funcion CORE
   var bubbleQueue = false
   var addBubble = function(say, posted, reply, live) {
     reply = typeof reply !== "undefined" ? reply : ""
-    live = typeof live !== "undefined" ? live : true // bubbles that are not "live" are not animated and displayed differently
+    live = typeof live !== "undefined" ? live : true 
     var animationTime = live ? this.animationTime : 0
     var typeSpeed = live ? this.typeSpeed : 0
     // create bubble element
@@ -299,7 +274,7 @@ function Bubbles(container, self, options) {
     }, wait + animationTime * 2)
   }
 
-  // recall previous interactions
+  
   for (var i = 0; i < interactionsHistory.length; i++) {
     addBubble(
       interactionsHistory[i].say,
@@ -310,21 +285,18 @@ function Bubbles(container, self, options) {
   }
 }
 
-// below functions are specifically for WebPack-type project that work with import()
-
-// this function automatically adds all HTML and CSS necessary for chat-bubble to function
 function prepHTML(options) {
-  // options
+
   var options = typeof options !== "undefined" ? options : {}
-  var container = options.container || "chat" // id of the container HTML element
+  var container = options.container || "chat" 
   var relative_path = options.relative_path || "./node_modules/chat-bubble/"
 
-  // make HTML container element
+
   window[container] = document.createElement("div")
   window[container].setAttribute("id", container)
   document.body.appendChild(window[container])
 
-  // style everything
+ 
   var appendCSS = function(file) {
     var link = document.createElement("link")
     link.href = file
@@ -340,7 +312,7 @@ function prepHTML(options) {
   appendCSS(relative_path + "component/styles/typing.css")
 }
 
-// exports for es6
+
 if (typeof exports !== "undefined") {
   exports.Bubbles = Bubbles
   exports.prepHTML = prepHTML

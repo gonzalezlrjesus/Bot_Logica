@@ -1,4 +1,4 @@
-/* style user response reply */
+/* Respuestas */
 .bubble.reply {
   background: transparent;
   box-shadow: none;
@@ -10,7 +10,7 @@
   max-width: 65%;
 }
 .bubble.reply.history {
-  margin: 0 0 2px 0; /* remembered bubbles do not need to stand out via margin */
+  margin: 0 0 2px 0; 
 }
 .bubble.reply.say {
   /*
@@ -79,7 +79,7 @@
   height: auto;
 }
 
-/* interaction recall styles */
+
 .bubble.history .bubble-content .bubble-button,
 .bubble.history.reply:not(.bubble-picked) .bubble-content .bubble-button:hover,
 .bubble.history.reply .bubble-content .bubble-button.bubble-pick {
@@ -87,7 +87,7 @@
   cursor: default;
 }
 
-/* input fields for bubbles */
+
 .bubble .bubble-content input {
   background: linear-gradient(193deg, #1faced, #5592dc 100%) !important;
   box-shadow: 0 0px 1px 0px #000, 0 -1px 0 0px rgba(255, 255, 255, 0.38) inset;
